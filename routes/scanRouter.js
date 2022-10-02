@@ -1,7 +1,9 @@
 const router = require("express").Router();
 
-const { getScans, addScan } = require("../controllers/scanController");
+const { getScans, addScan, getScan, delScan } = require("../controllers/scanController");
 router.get('/', getScans);
-router.post('/create', addScan)
+router.get('/:id', getScan);
+router.post('/create', addScan);
+router.delete('/delete/:id', delScan)
 
 module.exports = router;

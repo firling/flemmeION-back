@@ -1,9 +1,14 @@
 const scan = require('../prisma/scan')
-const { uid } = require('uid')
+const { uid } = require('uid');
 
 const getScans = async (req, res) => {
     const scans = await scan.getScans();
     res.json({success: true, scans})
+}
+
+const getScan = async (req, res) => {
+    const scan = await require('../prisma/scan').getScanBy({id: +req.params.id})
+    res.json({success: true, scan})
 }
 
 const addScan = async (req, res) => {
@@ -13,10 +18,15 @@ const addScan = async (req, res) => {
         if (err)
             console.log("err", err);
     });
-    await scan.createScan({image: name, text})
-    res.json({success: true, name})
+    const post = await scan.createScan({image: name, text})
+    res.json({success: true, post})
+}
+
+const delScan = async (req, res) => {
+    const scan = await require('../prisma/scan').deleteScan(+req.params.id) 
+    res.json({success: true, scan})
 }
 
 module.exports = {
-    getScans, addScan
+    getScans, addScan, getScan, delScan
 }

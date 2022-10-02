@@ -5,12 +5,23 @@ const getScans = async () => {
     return scans
 }
 
+const getScanBy = async (data) => {
+    const scan = await prisma.scan.findUnique({ where: data })
+    return scan
+}
+
 const createScan = async (data) => {
     const post = await prisma.scan.create({data})
     return post
 }
 
+const deleteScan = async (id) => {
+    const scan = await prisma.scan.delete({
+        where: { id }
+    })
+    return scan
+}
 
 module.exports = {
-    getScans, createScan
+    getScans, getScanBy, createScan, deleteScan
 }
